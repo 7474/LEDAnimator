@@ -159,10 +159,10 @@ void LEDAnimator<LEDAnimator_NUM_LEDS>::update()
     {
         updateFrame = true;
         updatePixels = true;
-        Serial.println(nowMillis);
-        Serial.println(inFrameMillis);
-        Serial.println("to next frame");
-        Serial.println(this->currentFrameNum);
+        // Serial.println(nowMillis);
+        // Serial.println(inFrameMillis);
+        // Serial.println("to next frame");
+        // Serial.println(this->currentFrameNum);
         inFrameMillis -= this->currentFrame->millis;
         this->currentFrameStartMillis += this->currentFrame->millis;
 
@@ -189,8 +189,8 @@ void LEDAnimator<LEDAnimator_NUM_LEDS>::update()
         if (updateFrame)
         {
             this->fillSolid(this->currentFrame);
-            Serial.println("fillSolid");
-            this->printFrame(this->currentFrame);
+            // Serial.println("fillSolid");
+            // this->printFrame(this->currentFrame);
         }
         break;
     default:
@@ -212,17 +212,22 @@ template <size_t LEDAnimator_NUM_LEDS>
 void LEDAnimator<LEDAnimator_NUM_LEDS>::printFrames()
 {
     Serial.println("printFrames");
+    Serial.println("[");
     for (int i = 0; i < this->frameLength; i++)
     {
         this->printFrame(&this->frames[i]);
+        if (i + 1 != this->frameLength)
+        {
+            Serial.println(",");
+        }
     }
-    Serial.println("--");
+    Serial.println("]");
 }
 
 template <size_t LEDAnimator_NUM_LEDS>
 void LEDAnimator<LEDAnimator_NUM_LEDS>::printFrame(LEDAnimatorFrame<LEDAnimator_NUM_LEDS> *frame)
 {
-    Serial.print("-");
+    Serial.print("[");
     Serial.print(frame->frameType);
     Serial.print(",");
     Serial.print(frame->millis);
@@ -237,7 +242,7 @@ void LEDAnimator<LEDAnimator_NUM_LEDS>::printFrame(LEDAnimatorFrame<LEDAnimator_
         Serial.print(frame->leds[j].b);
         Serial.print("]");
     }
-    Serial.println("]");
+    Serial.print("]]");
 }
 
 template <size_t LEDAnimator_NUM_LEDS>
